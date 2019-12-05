@@ -3,33 +3,36 @@ from Maix import I2S, GPIO
 import audio
 
 ########### settings ############
-WIFI_EN_PIN     = 8
+#WIFI_EN_PIN     = 8
 # AUDIO_PA_EN_PIN = None  # Bit Dock and old MaixGo
-AUDIO_PA_EN_PIN = 32      # Maix Go(version 2.20)
+#AUDIO_PA_EN_PIN = 32      # Maix Go(version 2.20)
 # AUDIO_PA_EN_PIN = 2     # Maixduino
 
 
 # disable wifi
-fm.register(WIFI_EN_PIN, fm.fpioa.GPIO0, force=True)
-wifi_en=GPIO(GPIO.GPIO0, GPIO.OUT)
-wifi_en.value(0)
+#fm.register(WIFI_EN_PIN, fm.fpioa.GPIO0, force=True)
+#wifi_en=GPIO(GPIO.GPIO0, GPIO.OUT)
+#wifi_en.value(0)
 
 # open audio PA
-if AUDIO_PA_EN_PIN:
-    fm.register(AUDIO_PA_EN_PIN, fm.fpioa.GPIO1, force=True)
-    wifi_en=GPIO(GPIO.GPIO1, GPIO.OUT)
-    wifi_en.value(1)
+#if AUDIO_PA_EN_PIN:
+#    fm.register(AUDIO_PA_EN_PIN, fm.fpioa.GPIO1, force=True)
+#    wifi_en=GPIO(GPIO.GPIO1, GPIO.OUT)
+#    wifi_en.value(1)
 
 # register i2s(i2s0) pin
-fm.register(34,fm.fpioa.I2S0_OUT_D1, force=True)
+fm.register(33,fm.fpioa.I2S0_OUT_D1, force=True)
 fm.register(35,fm.fpioa.I2S0_SCLK, force=True)
-fm.register(33,fm.fpioa.I2S0_WS, force=True)
+fm.register(34,fm.fpioa.I2S0_WS, force=True)
 
 # init i2s(i2s0)
 wav_dev = I2S(I2S.DEVICE_0)
 
+# sd check
+os.listdir("/sd")
+
 # init audio
-player = audio.Audio(path = "/sd/6.wav")
+player = audio.Audio(path = "/sd/music1.wav")
 player.volume(40)
 
 # read audio info

@@ -1,6 +1,6 @@
 
 
-# Send image(jpeg) to server and display on server(PC), 
+# Send image(jpeg) to server and display on server(PC),
 # server code refer to ../tools_on_PC/network/pic_server.py
 
 
@@ -10,38 +10,39 @@ from Maix import GPIO
 from fpioa_manager import fm, board_info
 
 ########## config ################
-wifi_ap_ssid   = "Sipeed_2.4G"
-wifi_ap_passwd = "Sipeed123."
-server_ip      = "192.168.0.183"
+wifi_ap_ssid   = "DK"
+wifi_ap_passwd = "idsbg@123."
+server_ip      = "10.0.1.210"
 server_port    = 3456
 ##################################
 
 # for new MaixGO board, if not, remove it
-fm.register(0, fm.fpioa.GPIOHS1, force=True)
-wifi_io0_en=GPIO(GPIO.GPIOHS1, GPIO.OUT)
-wifi_io0_en.value(0)
+#fm.register(0, fm.fpioa.GPIOHS1, force=True)
+#wifi_io0_en=GPIO(GPIO.GPIOHS1, GPIO.OUT)
+#wifi_io0_en.value(0)
 
 # En SEP8285
-fm.register(8, fm.fpioa.GPIOHS0, force=True)
-wifi_en=GPIO(GPIO.GPIOHS0,GPIO.OUT)
-fm.register(board_info.WIFI_RX,fm.fpioa.UART2_TX, force=True)
-fm.register(board_info.WIFI_TX,fm.fpioa.UART2_RX, force=True)
+#fm.register(8, fm.fpioa.GPIOHS0, force=True)
+#wifi_en=GPIO(GPIO.GPIOHS0,GPIO.OUT)
 
-def wifi_enable(en):
-    global wifi_en
-    wifi_en.value(en)
+fm.register(board_info.WIFI_TX, fm.fpioa.UART1_TX, force=True)
+fm.register(board_info.WIFI_RX, fm.fpioa.UART1_RX, force=True)
+
+#def wifi_enable(en):
+#    global wifi_en
+#    wifi_en.value(en)
 
 def wifi_reset():
     global uart
-    wifi_enable(0)
+    #wifi_enable(0)
     time.sleep_ms(200)
-    wifi_enable(1)
+    #wifi_enable(1)
     time.sleep(2)
-    uart = UART(UART.UART2,115200,timeout=1000, read_buf_len=4096)
+    uart = UART(UART.UART1,115200,timeout=1000, read_buf_len=4096)
     tmp = uart.read()
     uart.write("AT+UART_CUR=921600,8,1,0,0\r\n")
     print(uart.read())
-    uart = UART(UART.UART2,921600,timeout=1000, read_buf_len=4096)
+    uart = UART(UART.UART1,921600,timeout=1000, read_buf_len=4096)
     uart.write("AT\r\n")
     tmp = uart.read()
     print(tmp)

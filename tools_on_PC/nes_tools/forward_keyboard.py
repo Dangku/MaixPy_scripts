@@ -133,7 +133,7 @@ class MainWindow(QMainWindow):
 
 com = serial.Serial()
 com.baudrate = 115200
-com.port = "/dev/ttyUSB1"
+com.port = "/dev/ttyUSB0"
 com.bytesize = 8
 com.stopbits = 1
 com.parity = "N"
