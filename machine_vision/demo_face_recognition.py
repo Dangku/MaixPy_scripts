@@ -4,10 +4,10 @@ import KPU as kpu
 import time
 from Maix import FPIOA,GPIO
 task_fd = kpu.load(0x200000)
-task_ld = kpu.load(0x300000) 
-task_fe = kpu.load(0x400000) 
+task_ld = kpu.load(0x300000)
+task_fe = kpu.load(0x400000)
 clock = time.clock()
-key_pin=16
+key_pin=26
 fpioa = FPIOA()
 fpioa.set_function(key_pin,FPIOA.GPIO7)
 key_gpio=GPIO(GPIO.GPIO7,GPIO.IN)
@@ -15,7 +15,7 @@ last_key_state=1
 key_pressed=0
 def check_key():
     global last_key_state
-    global key_pressed 
+    global key_pressed
     val=key_gpio.value()
     if last_key_state == 1 and val == 0:
         key_pressed=1
@@ -38,7 +38,7 @@ img_face=image.Image(size=(128,128))
 a=img_face.pix_to_ai()
 record_ftr=[]
 record_ftrs=[]
-names = ['Mr.1', 'Mr.2', 'Mr.3', 'Mr.4', 'Mr.5', 'Mr.6', 'Mr.7', 'Mr.8', 'Mr.9' , 'Mr.10'] 
+names = ['Mr.1', 'Mr.2', 'Mr.3', 'Mr.4', 'Mr.5', 'Mr.6', 'Mr.7', 'Mr.8', 'Mr.9' , 'Mr.10']
 while(1):
     check_key()
     img = sensor.snapshot()
